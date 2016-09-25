@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-12">
+<p id="notice"><%= notice %></p>
+
+<div class="form-group">
+  <strong>Username:</strong>
+  <%= @user.username %>
+</div>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user), class: "btn btn-info" %> |
+<%= link_to 'Back', users_path, class: "btn btn-warning" %>
+
+
+<%= render '/projects/form' %>
+
+</br>
+</br>
+<div class="panel panel-primary">
+<!-- Default panel contents -->
+<div class="panel-heading"><h3>Listing Projects for User <%= @user.projects.count %></h3></div>
+<div class="panel-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Total budget</th>
+        <th>Discount</th>
+        <th>Net budget</th>
+        <th>User</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @user.projects.each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.description %></td>
+          <td><%= project.total_budget %></td>
+          <td><%= project.discount %></td>
+          <td><%= project.net_budget %></td>
+          <td><%= project.user.try(:username) %></td>
+          <td><%= link_to 'Show', project %></td>
+          <td><%= link_to 'Edit', edit_project_path(project) %></td>
+          <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+</div>
