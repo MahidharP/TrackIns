@@ -5,20 +5,19 @@ class Installment < ActiveRecord::Base
 	validates_presence_of :details
 
 
-	private
+	protected
+
 	def check_over_payment
+		total_installment_amount = self.project.installments.sum(:amount) + self.amount
 
-	total_installment_amount = self.project.installments.sum(:amount) + self.amount
-	if total_installment_amount > self.project.net_budget
-		errors.add(:amount, "Payment exceeding")
+		if total_installment_amount > self.project.net_budget
+			errors.add(:amount, "Payment exceeding")
+		end
 	end
-end
-def check_date
 
+	def check_date
     if self.installment_date < Date.today
       errors.add(:installment_date, "Should be lesser than Present Day")
     end
-
   end
-
 end
